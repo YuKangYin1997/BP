@@ -1,0 +1,44 @@
+{% extends 'dash_board_base.html' %}
+
+{% block page-content %}
+<div id="container1" style="height: 300px; weight: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>#}
+{#           <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>#}
+           <script type="text/javascript">
+            var dom = document.getElementById("container1");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            option = {
+                legend: {
+                    data: ['recalling_error'],
+                    align: 'left'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: {{ nn_input_data_index }}
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: 'recalling_error',
+                    data: {{ nn_loss }},
+                    type: 'line',
+                    smooth: true
+                }]
+            };
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+           </script>
+
+
+{% endblock %}

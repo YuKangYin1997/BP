@@ -1,0 +1,78 @@
+{% extends 'dash_board_base.html' %}
+
+{% block page-content %}
+<div id="container1" style="height: 300px; weight: 100%"></div>
+<div id="container2" style="height: 300px; weight: 100%"></div>
+           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>#}
+{#           <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>#}
+{#           <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>#}
+           <script type="text/javascript">
+            var dom = document.getElementById("container1");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            option = {
+                legend: {
+                    data: ['expect_output', 'actual_output'],
+                    align: 'left'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: {{ degeneralized_input_data_list }}
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: 'expect_output',
+                    data: {{ degeneralized_output_data_list }},
+                    type: 'line',
+                    smooth: true
+                }, {
+                    name: 'actual_output',
+                    data: {{ degeneralized_actual_output_data_list }},
+                    type: 'line',
+                    smooth: true
+                }]
+            };
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+           </script>
+
+        <script type="text/javascript">
+            var dom = document.getElementById("container2");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            option = {
+                legend: {
+                    data: ['loss'],
+                    align: 'left'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: {{ nn_iteration }}
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: 'loss',
+                    data: {{ nn_loss }},
+                    type: 'line',
+                    smooth: true
+                }]
+            };
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+           </script>
+
+{% endblock %}
